@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mom's Cooking Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index_bakery_style.css">
+</head>
+<body>
+
+  <!-- Loading animation -->
+  <div id="loader">
+    <div class="spinner"></div>
+  </div>
+
+  <header>
+    <div class="logo"> 
+      <img class="logo-image" src="logo/logo_Jb.jpg" alt="Logo">
+      <span>J&amp;B Bakes</span>
+    </div>
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav id="nav">
+      <a href="#about">About</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#recipes">Recipes</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Welcome to J&amp;B's baking Portfolio</h1>
+      <p>Delicious baked goods, straight from the botttom of our heart.</p>
+      <button onclick="document.querySelector('#about').scrollIntoView({behavior: 'smooth'})">Explore</button>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <img src="https://source.unsplash.com/200x200/?chef,woman" alt="Chef portrait">
+    <div>
+      <h2>About Mom</h2>
+      <p>Professional home chef with 30 years of experience creating delicious family recipes.</p>
+    </div>
+  </section>
+
+  <section id="gallery">
+    <h2>Gallery</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="https://source.unsplash.com/600x400/?food,dish1" alt="Dish 1">
+      </div>
+      <div class="gallery-item">
+        <img src="https://source.unsplash.com/600x400/?food,dish2" alt="Dish 2">
+      </div>
+      <div class="gallery-item">
+        <img src="https://source.unsplash.com/600x400/?food,dish3" alt="Dish 3">
+      </div>
+    </div>
+  </section>
+
+  <div class="lightbox" id="lightbox">
+    <img src="" alt="">
+  </div>
+
+  <section id="recipes">
+    <h2>Recipe Highlights</h2>
+    <input type="text" id="search" placeholder="Search recipes...">
+    <div class="recipe-list" id="recipe-list">
+      <div class="recipe-card" data-name="Pasta">
+        <h3>Pasta Primavera</h3>
+        <p>Fresh vegetables and pasta.</p>
+        <div class="recipe-details">
+          <p>1. Boil pasta<br>2. Sauté vegetables<br>3. Combine and serve</p>
+          <button onclick="window.print()">Print Recipe</button>
+        </div>
+        <button class="toggle-details">Show Details</button>
+      </div>
+      <div class="recipe-card" data-name="Cake">
+        <h3>Chocolate Cake</h3>
+        <p>Rich and moist.</p>
+        <div class="recipe-details">
+          <p>1. Mix dry ingredients<br>2. Add wet ingredients<br>3. Bake at 350°F for 30 minutes</p>
+          <button onclick="window.print()">Print Recipe</button>
+        </div>
+        <button class="toggle-details">Show Details</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials">
+    <h2>Testimonials</h2>
+    <div class="testimonials">
+      <div class="testimonial-track" id="testimonial-track">
+        <div class="testimonial">
+          <p>"Absolutely delicious meals!"</p>
+          <strong>- Customer A</strong>
+        </div>
+        <div class="testimonial">
+          <p>"A wonderful teacher in cooking class."</p>
+          <strong>- Student B</strong>
+        </div>
+        <div class="testimonial">
+          <p>"Catering that impressed all my guests."</p>
+          <strong>- Client C</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <form onsubmit="event.preventDefault(); alert('Message sent!');">
+      <input type="text" placeholder="Your Name" aria-label="Your Name" required>
+      <input type="email" placeholder="Your Email" aria-label="Your Email" required>
+      <textarea rows="5" placeholder="Your Message" aria-label="Your Message"></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <button class="dark-toggle" id="dark-toggle">🌙</button>
+
+  <script src="index_bakery_animations.js"></script>
+</body>
+</html>
