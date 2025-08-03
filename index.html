@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mom's Cooking Portfolio</title>
+  <title>J&B portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index_bakery_style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
 
@@ -19,112 +21,131 @@
       <img class="logo-image" src="logo/logo_Jb.jpg" alt="Logo">
       <span>J&amp;B Bakes</span>
     </div>
-    <div class="hamburger" id="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
+    <div class="hamburger-container">
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
+
     <nav id="nav">
       <a href="#about">About</a>
       <a href="#gallery">Gallery</a>
-      <a href="#recipes">Recipes</a>
-      <a href="#testimonials">Testimonials</a>
-      <a href="#contact">Contact</a>
     </nav>
   </header>
 
   <section class="hero">
+    <div class="hero-slideshow">
+    </div>
     <div class="hero-content">
       <h1>Welcome to J&amp;B's baking Portfolio</h1>
-      <p>Delicious baked goods, straight from the botttom of our heart.</p>
+      <p>Delicious baked goods, straight from the bottom of our heart.</p>
       <button onclick="document.querySelector('#about').scrollIntoView({behavior: 'smooth'})">Explore</button>
     </div>
   </section>
 
-  <section id="about" class="about">
-    <img src="https://source.unsplash.com/200x200/?chef,woman" alt="Chef portrait">
-    <div>
-      <h2>About Mom</h2>
-      <p>Professional home chef with 30 years of experience creating delicious family recipes.</p>
+  <section id="about" class="about" data-animate>
+    <div data-animate data-animate-delay="100">
+      <h2>About Us</h2>
+      <p>Homely bakers that find joy in baking!</p>
+      <p>Welcome to our amazing portfolio with every baked goods we've ever done.</p>
     </div>
   </section>
 
-  <section id="gallery">
-    <h2>Gallery</h2>
-    <div class="gallery-grid">
-      <div class="gallery-item">
-        <img src="https://source.unsplash.com/600x400/?food,dish1" alt="Dish 1">
+  <!-- Gallery section -->
+<section id="gallery" data-animate>
+  <h2 data-animate data-animate-delay="100">Gallery</h2>
+  
+  <!-- Main Categories View (default visible) -->
+  <div class="view" id="categoriesView">
+    <div class="category-grid">
+      <!-- Breads -->
+      <div class="category-card" onclick="showCategory('breads')">
+        <div class="category-image" style="background-image: url('https://via.placeholder.com/500x500?text=Breads')"></div>
+        <h3 class="category-title">Breads</h3>
       </div>
-      <div class="gallery-item">
-        <img src="https://source.unsplash.com/600x400/?food,dish2" alt="Dish 2">
+      
+      <!-- Cakes & Cupcakes -->
+      <div class="category-card" onclick="showCategory('cakes')">
+        <div class="category-image" style="background-image: url('https://via.placeholder.com/500x500?text=Cakes+Cupcakes')"></div>
+        <h3 class="category-title">Cakes & Cupcakes</h3>
       </div>
-      <div class="gallery-item">
-        <img src="https://source.unsplash.com/600x400/?food,dish3" alt="Dish 3">
+      
+      <!-- Cookies & Biscuits -->
+      <div class="category-card" onclick="showCategory('cookies')">
+        <div class="category-image" style="background-image: url('https://via.placeholder.com/500x500?text=Cookies+Biscuits')"></div>
+        <h3 class="category-title">Cookies & Biscuits</h3>
+      </div>
+      
+      <!-- Pastries -->
+      <div class="category-card" onclick="showCategory('pastries')">
+        <div class="category-image" style="background-image: url('https://via.placeholder.com/500x500?text=Pastries')"></div>
+        <h3 class="category-title">Pastries</h3>
       </div>
     </div>
-  </section>
-
-  <div class="lightbox" id="lightbox">
-    <img src="" alt="">
   </div>
+  
+  <!-- Category Items View (hidden by default) -->
+  <div class="view" id="itemsView" style="display:none">
+    <button class="back-button" onclick="showCategories()">← Back to Categories</button>
+    <h3 id="categoryHeader"></h3>
+    <div class="items-grid" id="itemsGrid"></div>
+  </div>
+  
+  <!-- Item Detail View (hidden by default) -->
+  <div class="view" id="itemDetailView" style="display:none">
+    <button class="back-button" onclick="showItems()">← Back to Items</button>
+    <h3 id="itemHeader"></h3>
+    <div class="item-gallery" id="itemGallery"></div>
+  </div>
+</section>
 
-  <section id="recipes">
-    <h2>Recipe Highlights</h2>
-    <input type="text" id="search" placeholder="Search recipes...">
-    <div class="recipe-list" id="recipe-list">
-      <div class="recipe-card" data-name="Pasta">
-        <h3>Pasta Primavera</h3>
-        <p>Fresh vegetables and pasta.</p>
-        <div class="recipe-details">
-          <p>1. Boil pasta<br>2. Sauté vegetables<br>3. Combine and serve</p>
-          <button onclick="window.print()">Print Recipe</button>
-        </div>
-        <button class="toggle-details">Show Details</button>
-      </div>
-      <div class="recipe-card" data-name="Cake">
-        <h3>Chocolate Cake</h3>
-        <p>Rich and moist.</p>
-        <div class="recipe-details">
-          <p>1. Mix dry ingredients<br>2. Add wet ingredients<br>3. Bake at 350°F for 30 minutes</p>
-          <button onclick="window.print()">Print Recipe</button>
-        </div>
-        <button class="toggle-details">Show Details</button>
-      </div>
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-content">
+    <img id="lightboxImage" src="" alt="">
+  </div>
+</div>
+
+
+  <footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3>J&amp;B Bakes</h3>
+      <p>Delicious baked goods made with love since 2017</p>
     </div>
-  </section>
-
-  <section id="testimonials">
-    <h2>Testimonials</h2>
-    <div class="testimonials">
-      <div class="testimonial-track" id="testimonial-track">
-        <div class="testimonial">
-          <p>"Absolutely delicious meals!"</p>
-          <strong>- Customer A</strong>
-        </div>
-        <div class="testimonial">
-          <p>"A wonderful teacher in cooking class."</p>
-          <strong>- Student B</strong>
-        </div>
-        <div class="testimonial">
-          <p>"Catering that impressed all my guests."</p>
-          <strong>- Client C</strong>
-        </div>
-      </div>
+    
+  
+    <div class="footer-bottom">
+      <p>Website designed with ❤️ by Benny J&amp;B Bakes</p>
     </div>
-  </section>
+  </footer>
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <form onsubmit="event.preventDefault(); alert('Message sent!');">
-      <input type="text" placeholder="Your Name" aria-label="Your Name" required>
-      <input type="email" placeholder="Your Email" aria-label="Your Email" required>
-      <textarea rows="5" placeholder="Your Message" aria-label="Your Message"></textarea>
-      <button type="submit">Send Message</button>
-    </form>
-  </section>
-
-  <button class="dark-toggle" id="dark-toggle">🌙</button>
 
   <script src="index_bakery_animations.js"></script>
+  <script src="hero-slideshow.js"></script>
+
+  <script>
+  // Scroll to top on page load
+  window.onload = function() {
+    setTimeout(function() {
+      window.scrollTo(0, 0);
+    }, 0);
+  };
+
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'instant'
+      });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }, 0);
+  });
+</script>
+  
 </body>
 </html>
