@@ -1,0 +1,18 @@
+window.cookiesImages = [
+  'baked-goods/gallery-pictures/cookies/image_001.jpg',
+  'baked-goods/gallery-pictures/cookies/image_002.jpg',
+  'baked-goods/gallery-pictures/cookies/image_003.jpg',
+  'baked-goods/gallery-pictures/cookies/image_004.jpg',
+  'baked-goods/gallery-pictures/cookies/image_005.jpg',
+  'baked-goods/gallery-pictures/cookies/image_006.jpg',
+  'baked-goods/gallery-pictures/cookies/image_007.jpg',
+  'baked-goods/gallery-pictures/cookies/image_008.jpg',
+  'baked-goods/gallery-pictures/cookies/image_009.jpg',
+  'baked-goods/gallery-pictures/cookies/image_010.jpg',
+  'baked-goods/gallery-pictures/cookies/image_011.jpg',
+  'baked-goods/gallery-pictures/cookies/image_012.jpg',
+  'baked-goods/gallery-pictures/cookies/image_013.jpg',
+  'baked-goods/gallery-pictures/cookies/image_014.jpg',
+  'baked-goods/gallery-pictures/cookies/image_015.jpg',
+  'baked-goods/gallery-pictures/cookies/image_016.jpg',
+];

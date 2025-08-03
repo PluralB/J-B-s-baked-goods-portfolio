@@ -123,8 +123,16 @@
   </footer>
 
 
-  <script src="index_bakery_animations.js"></script>
-  <script src="hero-slideshow.js"></script>
+  <!-- Load category images FIRST -->
+  <script src="js/categories/breads.js"></script>
+  <script src="js/categories/cakes.js"></script>
+  <script src="js/categories/cookies.js"></script>
+  <script src="js/categories/pastries.js"></script>
+
+  <!-- Then load scripts that use these images -->
+  <script src="js/category-images.js"></script>
+  <script src="js/hero-slideshow.js"></script>
+  <script src="js/index_bakery_animations.js"></script>
 
   <script>
   // Scroll to top on page load

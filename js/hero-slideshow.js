@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Hero Slideshow Functionality
   const heroSlideshow = document.querySelector('.hero-slideshow');
   
-  // Array of image paths 
   const images = [
     'baked-goods/showdown/Image_001.jpg',
     'baked-goods/showdown/Image_002.jpg',
@@ -99,7 +97,6 @@ document.addEventListener('DOMContentLoaded', function() {
     img.src = src;
     img.alt = `Baking showcase ${index + 1}`;
     
-    // Error handling
     img.onerror = function() {
       console.error('Failed to load image:', src);
       this.style.display = 'none';
@@ -109,17 +106,28 @@ document.addEventListener('DOMContentLoaded', function() {
     heroSlideshow.appendChild(img);
   });
 
-  // Function to rotate images
-  function rotateImages() {
+  // Function to get a random image that's not the current one
+  function getRandomImage(current) {
     const images = document.querySelectorAll('.hero-slideshow img');
+    if (images.length <= 1) return null; // Need at least 2 images
+    
+    let next;
+    do {
+      const randomIndex = Math.floor(Math.random() * images.length);
+      next = images[randomIndex];
+    } while (next === current && images.length > 1);
+    
+    return next;
+  }
+
+  // Function to rotate images randomly
+  function rotateImages() {
     const active = document.querySelector('.hero-slideshow img.active');
+    if (!active) return;
     
-    if (!active) return; // Safety check
+    const next = getRandomImage(active);
+    if (!next) return;
     
-    // Find next image
-    let next = active.nextElementSibling || heroSlideshow.firstElementChild;
-    
-    // Update classes
     active.classList.remove('active');
     next.classList.add('active');
   }
