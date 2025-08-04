@@ -1,5 +1,3 @@
-// REPLACE the entire content of category-images.js with this:
-
 function initCategorySlideshows() {
   const categories = {
     breads: window.breadsImages || [],
@@ -9,7 +7,6 @@ function initCategorySlideshows() {
   };
 
   document.querySelectorAll('.category-card').forEach(card => {
-    // Get category from onclick attribute
     const onclickAttr = card.getAttribute('onclick');
     if (!onclickAttr) return;
     
@@ -17,31 +14,35 @@ function initCategorySlideshows() {
     if (!match) return;
     
     const category = match[1];
-    const images = [...categories[category]];  
+    const images = [...categories[category]];
 
-    
     if (images && images.length > 0) {
+      const container = card.querySelector('.category-image-container');
       const currentImg = card.querySelector('.category-image.current');
+      const nextImg = card.querySelector('.category-image.next');
       
-      if (currentImg) {
-        // Set initial image immediately
+      if (currentImg && nextImg) {
+        // Set initial images
         currentImg.style.backgroundImage = `url('${images[0]}')`;
-        console.log(`Set initial image for ${category}:`, images[0]);
+        nextImg.style.backgroundImage = `url('${images[1]}')`;
         
-        // Simple rotation without complex animations
         let index = 1;
+        
         setInterval(() => {
-          const nextImage = images[index % images.length];
+          // Update next image
+          const nextIndex = (index + 1) % images.length;
+          nextImg.style.backgroundImage = `url('${images[nextIndex]}')`;
           
-          // Simple fade transition
-          currentImg.style.transition = 'opacity 0.5s ease';
-          currentImg.style.opacity = '0';
+          // Trigger animation
+          currentImg.classList.remove('current');
+          currentImg.classList.add('next');
+          nextImg.classList.remove('next');
+          nextImg.classList.add('current');
           
-          setTimeout(() => {
-            currentImg.style.backgroundImage = `url('${nextImage}')`;
-            currentImg.style.opacity = '1';
-            console.log(`Updated ${category} to:`, nextImage);
-          }, 250);
+          // Swap references
+          const temp = currentImg;
+          currentImg = nextImg;
+          nextImg = temp;
           
           index++;
         }, 3000);
