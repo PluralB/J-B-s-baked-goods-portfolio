@@ -606,3 +606,58 @@ section h2 {
   color: var(--primary);
 }
 
+.category-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.category-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.category-image.current {
+  z-index: 1;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.category-image.next {
+  z-index: 0;
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.category-image.swipe-left {
+  animation: swipeLeftOut 0.5s forwards;
+}
+
+.category-image.swipe-left-next {
+  animation: swipeLeftIn 0.5s forwards;
+}
+
+@keyframes swipeLeftOut {
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes swipeLeftIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
