@@ -63,7 +63,7 @@
   <!-- Breads -->
       <div class="category-card" onclick="showCategory('breads')">
       <div class="category-image-container">
-        <div class="category-image current" style="background-image: url('https://via.placeholder.com/500x500?text=Breads')"></div>
+        <div class="category-image current"></div>
         <div class="category-image next"></div>
       </div>
       <h3 class="category-title">Breads</h3>
@@ -72,7 +72,7 @@
   <!-- Cakes & Cupcakes -->
     <div class="category-card" onclick="showCategory('cakes')">
       <div class="category-image-container">
-        <div class="category-image current" style="background-image: url('https://via.placeholder.com/500x500?text=Cakes+Cupcakes')"></div>
+        <div class="category-image current"></div>
         <div class="category-image next"></div>
       </div>
       <h3 class="category-title">Cakes & Cupcakes</h3>
@@ -81,7 +81,7 @@
   <!-- Cookies & Biscuits -->
     <div class="category-card" onclick="showCategory('cookies')">
       <div class="category-image-container">
-        <div class="category-image current" style="background-image: url('https://via.placeholder.com/500x500?text=Cookies+Biscuits')"></div>
+        <div class="category-image current"></div>
         <div class="category-image next"></div>
       </div>
       <h3 class="category-title">Cookies & Biscuits</h3>
@@ -90,7 +90,7 @@
   <!-- Pastries -->
     <div class="category-card" onclick="showCategory('pastries')">
       <div class="category-image-container">
-        <div class="category-image current" style="background-image: url('https://via.placeholder.com/500x500?text=Pastries')"></div>
+        <div class="category-image current"></div>
         <div class="category-image next"></div>
       </div>
       <h3 class="category-title">Pastries</h3>
@@ -98,12 +98,14 @@
   </div>
   
   <!-- Category Items View (hidden by default) -->
-  <div class="view" id="itemsView" style="display:none">
-    <button class="back-button" onclick="showCategories()">← Back to Categories</button>
-    <h3 id="categoryHeader"></h3>
-    <div class="items-grid" id="itemsGrid"></div>
+  <div class="view" id="categoryGalleryView" style="display:none">
+    <button class="back-button" onclick="showCategories()">
+      ← Back to Categories
+    </button>
+    <h3 id="currentCategoryTitle"></h3>
+    <div class="gallery-grid" id="categoryGalleryGrid"></div>
   </div>
-  
+    
   <!-- Item Detail View (hidden by default) -->
   <div class="view" id="itemDetailView" style="display:none">
     <button class="back-button" onclick="showItems()">← Back to Items</button>
@@ -119,6 +121,19 @@
   </div>
 </div>
 
+<br><br><br><br><br><br><br><br><br><br> 
+<br><br><br><br><br><br><br><br><br><br>
+
+<br><br><br><br><br><br><br><br><br><br> 
+<br><br><br><br><br><br><br><br><br><br>
+
+<br><br><br><br><br><br><br><br><br><br> 
+<br><br><br><br><br><br><br><br><br><br>
+
+<br><br><br><br><br><br><br><br><br><br> 
+<br><br><br><br><br><br><br><br><br><br>
+
+
 
   <footer class="site-footer">
   <div class="footer-content">
@@ -133,17 +148,20 @@
     </div>
   </footer>
 
-
-  <!-- Load category images FIRST -->
+  <!-- Category images first -->
   <script src="js/categories/breads.js"></script>
   <script src="js/categories/cakes.js"></script>
   <script src="js/categories/cookies.js"></script>
   <script src="js/categories/pastries.js"></script>
 
-  <!-- Then load scripts that use these images -->
+  <!-- Then gallery functionality -->
   <script src="js/category-images.js"></script>
+  <script src="js/gallery-navigation.js"></script>
+
+  <!-- Then other scripts -->
   <script src="js/hero-slideshow.js"></script>
   <script src="js/index_bakery_animations.js"></script>
+
 
   <script>
   // Scroll to top on page load
@@ -166,5 +184,7 @@
   });
 </script>
   
+
+
 </body>
 </html>

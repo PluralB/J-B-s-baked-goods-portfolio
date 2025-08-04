@@ -1,5 +1,5 @@
 // category-images.js
-function setRandomCategoryImages() {
+function initCategorySlideshows() {
   const categories = {
     breads: window.breadsImages || [],
     cakes: window.cakesImages || [],
@@ -7,88 +7,45 @@ function setRandomCategoryImages() {
     pastries: window.pastriesImages || []
   };
 
-  const categoryCards = document.querySelectorAll('.category-card');
-  
-  categoryCards.forEach(card => {
-    try {
-      const category = card.getAttribute('onclick').match(/'([^']+)'/)[1];
-      const images = categories[category];
+  document.querySelectorAll('.category-card').forEach(card => {
+    const category = card.getAttribute('onclick').match(/'([^']+)'/)[1];
+    const images = categories[category];
+    
+    if (images.length > 0) {
+      const container = card.querySelector('.category-image-container');
+      const currentImg = card.querySelector('.category-image.current');
+      const nextImg = card.querySelector('.category-image.next');
       
-      if (images && images.length > 0) {
-        const imageContainer = card.querySelector('.category-image-container');
-        const currentImg = imageContainer.querySelector('.category-image.current');
-        const nextImg = imageContainer.querySelector('.category-image.next');
+      // Set initial image
+      currentImg.style.backgroundImage = `url('${images[0]}')`;
+      
+      // Animation logic
+      let index = 1;
+      setInterval(() => {
+        const nextImage = images[index % images.length];
         
-        // Get a new random image that's different from the current one
-        let randomImage;
-        do {
-          randomImage = images[Math.floor(Math.random() * images.length)];
-        } while (randomImage === currentImg.style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1') && images.length > 1);
+        // Prepare next image
+        nextImg.style.backgroundImage = `url('${nextImage}')`;
         
-        // Set up the next image
-        nextImg.style.backgroundImage = `url('${randomImage}')`;
-        
-        // Add animation classes
+        // Animate
         currentImg.classList.add('swipe-left');
         nextImg.classList.add('swipe-left-next');
         
-        // After animation completes, swap the images
+        // Reset after animation
         setTimeout(() => {
           currentImg.classList.remove('current', 'swipe-left');
           nextImg.classList.remove('next', 'swipe-left-next');
           nextImg.classList.add('current');
           currentImg.classList.add('next');
           
-          // Reset the now-hidden image
-          currentImg.style.backgroundImage = '';
+          // Swap DOM positions
+          container.appendChild(currentImg);
         }, 500);
-      }
-    } catch (error) {
-      console.error('Error processing category card:', error);
+        
+        index++;
+      }, 3000);
     }
   });
 }
 
-// Initialize with current/next images
-function initializeCategoryImages() {
-  const categoryCards = document.querySelectorAll('.category-card');
-  
-  categoryCards.forEach(card => {
-    const imageContainer = card.querySelector('.category-image-container');
-    if (!imageContainer) {
-      const container = document.createElement('div');
-      container.className = 'category-image-container';
-      
-      const currentImg = document.createElement('div');
-      currentImg.className = 'category-image current';
-      
-      const nextImg = document.createElement('div');
-      nextImg.className = 'category-image next';
-      
-      container.appendChild(currentImg);
-      container.appendChild(nextImg);
-      
-      // Replace the existing image with our new container
-      const oldImage = card.querySelector('.category-image');
-      if (oldImage) {
-        oldImage.parentNode.replaceChild(container, oldImage);
-      } else {
-        card.insertBefore(container, card.firstChild);
-      }
-    }
-  });
-  
-  // Set initial images
-  setRandomCategoryImages();
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  // Initialize the image containers
-  initializeCategoryImages();
-  
-  // Refresh when returning to categories
-  document.querySelector('.back-button')?.addEventListener('click', setRandomCategoryImages);
-  
-  // Change images every 5 seconds with swipe animation
-  setInterval(setRandomCategoryImages, 5000);
-});
+document.addEventListener('DOMContentLoaded', initCategorySlideshows);

@@ -8,4 +8,4 @@ window.breadsImages = [
   'baked-goods/gallery-pictures/breads/image_007.jpg',
   'baked-goods/gallery-pictures/breads/image_008.jpg',
   'baked-goods/gallery-pictures/breads/image_009.jpg'
-];
+]; 
