@@ -428,7 +428,7 @@ header nav a:hover {
 .lightbox-content img {
   max-width: 100%;
   max-height: 90vh;
-  border: 3px solid white;
+  border: none;
   border-radius: 5px;
 }
 
