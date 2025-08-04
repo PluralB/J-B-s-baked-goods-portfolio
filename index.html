@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>J&B portfolio</title>
+  <title>J&B Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index_bakery_style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
 
@@ -37,6 +36,7 @@
 
   <section class="hero">
     <div class="hero-slideshow">
+      <!-- Slideshow images will be added by JavaScript -->
     </div>
     <div class="hero-content">
       <h1>Welcome to J&amp;B's baking Portfolio</h1>
@@ -54,137 +54,104 @@
   </section>
 
   <!-- Gallery section -->
-<section id="gallery" data-animate>
-  <h2 data-animate data-animate-delay="100">Gallery</h2>
-  
-  <!-- Main Categories View (default visible) -->
-  <div class="view" id="categoriesView">
-    <div class="category-grid">
-  <!-- Breads -->
-      <div class="category-card" onclick="showCategory('breads')">
-      <div class="category-image-container">
-        <div class="category-image current"></div>
-        <div class="category-image next"></div>
-      </div>
-      <h3 class="category-title">Breads</h3>
-    </div>
-  
-  <!-- Cakes & Cupcakes -->
-    <div class="category-card" onclick="showCategory('cakes')">
-      <div class="category-image-container">
-        <div class="category-image current"></div>
-        <div class="category-image next"></div>
-      </div>
-      <h3 class="category-title">Cakes & Cupcakes</h3>
-    </div>
-  
-  <!-- Cookies & Biscuits -->
-    <div class="category-card" onclick="showCategory('cookies')">
-      <div class="category-image-container">
-        <div class="category-image current"></div>
-        <div class="category-image next"></div>
-      </div>
-      <h3 class="category-title">Cookies & Biscuits</h3>
-    </div>
-  
-  <!-- Pastries -->
-    <div class="category-card" onclick="showCategory('pastries')">
-      <div class="category-image-container">
-        <div class="category-image current"></div>
-        <div class="category-image next"></div>
-      </div>
-      <h3 class="category-title">Pastries</h3>
-    </div>
-  </div>
-  
-  <!-- Category Items View (hidden by default) -->
-  <div class="view" id="categoryGalleryView" style="display:none">
-    <button class="back-button" onclick="showCategories()">
-      ← Back to Categories
-    </button>
-    <h3 id="currentCategoryTitle"></h3>
-    <div class="gallery-grid" id="categoryGalleryGrid"></div>
-  </div>
+  <section id="gallery" data-animate>
+    <h2 data-animate data-animate-delay="100">Gallery</h2>
     
-  <!-- Item Detail View (hidden by default) -->
-  <div class="view" id="itemDetailView" style="display:none">
-    <button class="back-button" onclick="showItems()">← Back to Items</button>
-    <h3 id="itemHeader"></h3>
-    <div class="item-gallery" id="itemGallery"></div>
+    <!-- Main Categories View -->
+    <div class="view" id="categoriesView">
+      <div class="category-grid">
+        <!-- Breads -->
+        <div class="category-card" onclick="showCategory('breads')" data-category="breads">
+          <div class="category-image-container">
+            <div class="category-image current"></div>
+            <div class="category-image next"></div>
+          </div>
+          <h3 class="category-title">Breads</h3>
+        </div>
+
+        <!-- Cakes & Cupcakes -->
+        <div class="category-card" onclick="showCategory('cakes')" data-category="cakes">
+          <div class="category-image-container">
+            <div class="category-image current"></div>
+            <div class="category-image next"></div>
+          </div>
+          <h3 class="category-title">Cakes & Cupcakes</h3>
+        </div>
+
+        <!-- Cookies & Biscuits -->
+        <div class="category-card" onclick="showCategory('cookies')" data-category="cookies">
+          <div class="category-image-container">
+            <div class="category-image current"></div>
+            <div class="category-image next"></div>
+          </div>
+          <h3 class="category-title">Cookies & Biscuits</h3>
+        </div>
+
+        <!-- Pastries -->
+        <div class="category-card" onclick="showCategory('pastries')" data-category="pastries">
+          <div class="category-image-container">
+            <div class="category-image current"></div>
+            <div class="category-image next"></div>
+          </div>
+          <h3 class="category-title">Pastries</h3>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Category Items View -->
+    <div class="view" id="categoryGalleryView" style="display:none">
+      <button class="back-button" onclick="showCategories()">
+        ← Back to Categories
+      </button>
+      <h3 id="currentCategoryTitle"></h3>
+      <div class="gallery-grid" id="categoryGalleryGrid"></div>
+    </div>
+    
+    <!-- Item Detail View -->
+    <div class="view" id="itemDetailView" style="display:none">
+      <button class="back-button" onclick="showItems()">← Back to Items</button>
+      <h3 id="itemHeader"></h3>
+      <div class="item-gallery" id="itemGallery"></div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <div class="lightbox-content">
+      <img id="lightboxImage" src="" alt="">
+    </div>
   </div>
-</section>
-
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <div class="lightbox-content">
-    <img id="lightboxImage" src="" alt="">
-  </div>
-</div>
-
-<br><br><br><br><br><br><br><br><br><br> 
-<br><br><br><br><br><br><br><br><br><br>
-
-<br><br><br><br><br><br><br><br><br><br> 
-<br><br><br><br><br><br><br><br><br><br>
-
-<br><br><br><br><br><br><br><br><br><br> 
-<br><br><br><br><br><br><br><br><br><br>
-
-<br><br><br><br><br><br><br><br><br><br> 
-<br><br><br><br><br><br><br><br><br><br>
-
-
 
   <footer class="site-footer">
-  <div class="footer-content">
-    <div class="footer-section">
-      <h3>J&amp;B Bakes</h3>
-      <p>Delicious baked goods made with love since 2017</p>
-    </div>
-    
-  
-    <div class="footer-bottom">
-      <p>Website designed with ❤️ by Benny J&amp;B Bakes</p>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>J&amp;B Bakes</h3>
+        <p>Delicious baked goods made with love since 2017</p>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>Website designed with ❤️ by Benny J&amp;B Bakes</p>
+      </div>
     </div>
   </footer>
 
-  <!-- Category images first -->
+  <!-- Scripts -->
   <script src="js/categories/breads.js"></script>
   <script src="js/categories/cakes.js"></script>
   <script src="js/categories/cookies.js"></script>
   <script src="js/categories/pastries.js"></script>
-
-  <!-- Then gallery functionality -->
   <script src="js/category-images.js"></script>
   <script src="js/gallery-navigation.js"></script>
-
-  <!-- Then other scripts -->
   <script src="js/hero-slideshow.js"></script>
   <script src="js/index_bakery_animations.js"></script>
 
-
   <script>
-  // Scroll to top on page load
-  window.onload = function() {
-    setTimeout(function() {
-      window.scrollTo(0, 0);
-    }, 0);
-  };
-
-  window.addEventListener('load', function() {
-    setTimeout(function() {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'instant'
-      });
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    }, 0);
-  });
-</script>
-  
-
-
+    // Scroll to top on page load
+    window.onload = function() {
+      setTimeout(function() {
+        window.scrollTo(0, 0);
+      }, 0);
+    };
+  </script>
 </body>
 </html>
