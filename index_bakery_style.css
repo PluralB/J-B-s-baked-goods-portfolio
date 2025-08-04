@@ -478,7 +478,7 @@ header nav a:hover {
 
 .footer-bottom {
   background-color: #000000;
-  padding: 1rem;
+  padding: 3rem;
   text-align: center;
   margin-top: 2rem;
 }
@@ -486,7 +486,7 @@ header nav a:hover {
 .footer-bottom p {
   margin: 0;
   color: #aaaaaa;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 /* === SCROLL ANIMATIONS === */
