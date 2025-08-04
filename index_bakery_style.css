@@ -293,6 +293,7 @@ header nav a:hover {
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   background: #f0f0f0;
+  perspective: 1000px; 
 }
 
 .category-card:hover {
@@ -317,13 +318,13 @@ header nav a:hover {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  transition: transform 0.5s ease, opacity 0.5s ease;
+  transform-style: preserve-3d;
+  animation: swipeLeftOut 0.5s forwards;
 }
 
 .category-image.current {
   z-index: 1;
-  opacity: 1;
-  transform: translateX(0);
+  animation: swipeLeftIn 0.5s forwards;
 }
 
 .category-image.next {
@@ -516,6 +517,24 @@ header nav a:hover {
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes swipeLeftOut {
+  to { 
+    transform: translateX(-100%); 
+    opacity: 0; 
+  }
+}
+
+@keyframes swipeLeftIn {
+  from { 
+    transform: translateX(100%); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateX(0); 
+    opacity: 1; 
   }
 }
 
