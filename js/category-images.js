@@ -25,11 +25,12 @@ function initCategorySlideshows() {
     let currentImg = card.querySelector('.category-image.current');
     let nextImg = card.querySelector('.category-image.next');
     
-    // Set initial images
-    currentImg.style.backgroundImage = `url('${images[0]}')`;
-    nextImg.style.backgroundImage = `url('${images[1 % images.length]}')`;
+    // Set random initial images
+    const randomIndex = Math.floor(Math.random() * images.length);
+    currentImg.style.backgroundImage = `url('${images[randomIndex]}')`;
+    nextImg.style.backgroundImage = `url('${images[(randomIndex + 1) % images.length]}')`;
     
-    let index = 1;
+    let index = randomIndex + 1;
     
     const swapImages = () => {
       // Update next image

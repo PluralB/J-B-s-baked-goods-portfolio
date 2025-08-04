@@ -102,9 +102,15 @@ document.addEventListener('DOMContentLoaded', function() {
       this.style.display = 'none';
     };
     
-    if (index === 0) img.classList.add('active');
     heroSlideshow.appendChild(img);
   });
+
+  // Set a random initial active image
+  const allImages = document.querySelectorAll('.hero-slideshow img');
+  if (allImages.length > 0) {
+    const randomIndex = Math.floor(Math.random() * allImages.length);
+    allImages[randomIndex].classList.add('active');
+  }
 
   // Function to get a random image that's not the current one
   function getRandomImage(current) {
