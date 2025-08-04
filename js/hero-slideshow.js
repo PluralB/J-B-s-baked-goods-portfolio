@@ -88,7 +88,8 @@ document.addEventListener('DOMContentLoaded', function() {
     'baked-goods/showdown/Image_084.jpg',
     'baked-goods/showdown/Image_085.jpg',
     'baked-goods/showdown/Image_086.jpg',
-    'baked-goods/showdown/Image_087.jpg'
+    'baked-goods/showdown/Image_087.jpg',
+    'baked-goods/showdown/Image_088.jpg',
   ];
 
   // Create image elements for each image in the array
