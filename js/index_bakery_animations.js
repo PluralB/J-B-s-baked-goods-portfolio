@@ -1,4 +1,3 @@
-// Only animation and basic setup
 document.addEventListener('DOMContentLoaded', function() {
   // Loader
   const loader = document.getElementById('loader');
