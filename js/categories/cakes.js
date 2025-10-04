@@ -47,5 +47,6 @@ window.cakesImages = [
   'baked-goods/gallery-pictures/cakes/image_046.jpg',
   'baked-goods/gallery-pictures/cakes/image_047.jpg',
   'baked-goods/gallery-pictures/cakes/image_048.jpg',
-  'baked-goods/gallery-pictures/cakes/image_049.jpg'
+  'baked-goods/gallery-pictures/cakes/image_049.jpg',
+  'baked-goods/gallery-pictures/cakes/image_050.jpg'
 ];
