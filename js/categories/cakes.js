@@ -51,4 +51,8 @@ window.cakesImages = [
   'baked-goods/gallery-pictures/cakes/image_050.jpg',
   'baked-goods/gallery-pictures/cakes/image_051.jpg',
   'baked-goods/gallery-pictures/cakes/image_052.jpg',
+  'baked-goods/gallery-pictures/cakes/image_053.jpg',
+  'baked-goods/gallery-pictures/cakes/image_054.jpg',
+  'baked-goods/gallery-pictures/cakes/image_055.jpg',
+  'baked-goods/gallery-pictures/cakes/image_056.jpg',
 ];
