@@ -108,17 +108,6 @@ const galleryData = {
   ]
 };
 
-// 2) Basic debug helper (optional)
-function debugElements() {
-  console.log("=== DEBUGGING GALLERY ===");
-  console.log("categoriesView exists:", !!document.getElementById("categoriesView"));
-  console.log("categoryGalleryView exists:", !!document.getElementById("categoryGalleryView"));
-  console.log("categoryGalleryGrid exists:", !!document.getElementById("categoryGalleryGrid"));
-  console.log("lightbox exists:", !!document.getElementById("lightbox"));
-  console.log("lightboxImage exists:", !!document.getElementById("lightboxImage"));
-  console.log("Gallery data loaded:", Object.keys(galleryData));
-}
-
 // ==============================
 // Lightbox navigation state
 // ==============================
@@ -130,9 +119,7 @@ function showLightboxImage() {
   if (!img || !currentCategory) return;
 
   const list = galleryData[currentCategory];
-  if (!list || list.length === 0) return;
 
-  // Wrap-around
   if (currentIndex < 0) currentIndex = list.length - 1;
   if (currentIndex >= list.length) currentIndex = 0;
 
@@ -140,241 +127,153 @@ function showLightboxImage() {
 }
 
 function nextImage() {
-  if (!currentCategory) return;
   currentIndex++;
   showLightboxImage();
 }
 
 function prevImage() {
-  if (!currentCategory) return;
   currentIndex--;
   showLightboxImage();
 }
 
-
 // ==============================
-// Randomize / Shuffle function
+// Shuffle function
 // ==============================
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]]; // swap
+    [array[i], array[j]] = [array[j], array[i]];
   }
 }
 
 // ==============================
-// Views: Categories -> Items
+// Category view
 // ==============================
 window.showCategory = function (category) {
-  console.log("=== SHOW CATEGORY CALLED ===");
-  console.log("Category:", category);
+  const categoriesView = document.getElementById("categoriesView");
+  const galleryView = document.getElementById("categoryGalleryView");
+  const grid = document.getElementById("categoryGalleryGrid");
+  const title = document.getElementById("currentCategoryTitle");
 
-  try {
-    if (!galleryData[category]) {
-      console.error("No data for category:", category);
-      alert("No images found for this category!");
-      return;
-    }
+  categoriesView.style.display = "none";
+  galleryView.style.display = "block";
 
-    const categoriesView = document.getElementById("categoriesView");
-    const galleryView = document.getElementById("categoryGalleryView");
-    const grid = document.getElementById("categoryGalleryGrid");
-    const title = document.getElementById("currentCategoryTitle");
+  title.textContent = category.charAt(0).toUpperCase() + category.slice(1);
 
-    if (!categoriesView || !galleryView || !grid) {
-      console.error("Missing DOM elements!");
-      debugElements();
-      return;
-    }
+  grid.innerHTML = "";
 
-    // Switch views
-    categoriesView.style.display = "none";
-    galleryView.style.display = "block";
+  galleryData[category].forEach((imgSrc, index) => {
+    const itemDiv = document.createElement("div");
+    itemDiv.className = "gallery-item";
 
-    // Title
-    if (title) {
-      title.textContent = category.charAt(0).toUpperCase() + category.slice(1);
-    }
+    const img = document.createElement("img");
+    img.src = imgSrc;
+    img.style.cssText = `
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      cursor: pointer;
+    `;
 
-    // Populate grid
-    grid.innerHTML = "";
+    img.onclick = () => {
+      currentCategory = category;
+      currentIndex = index;
+      openLightbox();
+    };
 
-    galleryData[category].forEach((imgSrc, index) => {
-      const itemDiv = document.createElement("div");
-      itemDiv.className = "gallery-item";
-      itemDiv.style.cssText = `
-        position: relative;
-        overflow: hidden;
-        border-radius: 8px;
-        background: #f0f0f0;
-        min-height: 250px;
-      `;
-
-      const img = document.createElement("img");
-      img.src = imgSrc;
-      img.alt = `${category} image ${index + 1}`;
-      img.style.cssText = `
-        width: 100%;
-        height: 250px;
-        object-fit: cover;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-      `;
-
-      img.onerror = function () {
-        console.error("FAILED to load:", imgSrc);
-        this.style.background = "#ffebee";
-        this.alt = "Failed to load image";
-
-        const errorText = document.createElement("div");
-        errorText.textContent = "Image not found";
-        errorText.style.cssText = `
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          color: #666;
-          font-size: 14px;
-        `;
-        itemDiv.appendChild(errorText);
-      };
-
-      img.onload = function () {
-        console.log("SUCCESS loaded:", imgSrc);
-      };
-
-      // Open lightbox with swipe-enabled navigation state
-      img.onclick = () => {
-        currentCategory = category;
-        currentIndex = index;
-        openLightbox();
-      };
-
-      img.onmouseover = () => (img.style.transform = "scale(1.05)");
-      img.onmouseout = () => (img.style.transform = "scale(1)");
-
-      itemDiv.appendChild(img);
-      grid.appendChild(itemDiv);
-    });
-
-    console.log("Gallery populated:", galleryData[category].length, "images");
-  } catch (error) {
-    console.error("Error in showCategory:", error);
-    alert("Error loading gallery: " + error.message);
-  }
+    itemDiv.appendChild(img);
+    grid.appendChild(itemDiv);
+  });
 };
 
 window.showCategories = function () {
-  console.log("Returning to categories");
-  const categoriesView = document.getElementById("categoriesView");
-  const galleryView = document.getElementById("categoryGalleryView");
-  if (categoriesView) categoriesView.style.display = "block";
-  if (galleryView) galleryView.style.display = "none";
+  document.getElementById("categoriesView").style.display = "block";
+  document.getElementById("categoryGalleryView").style.display = "none";
 };
 
 // ==============================
-// Lightbox open/close
+// Lightbox
 // ==============================
 window.openLightbox = function () {
-  const lightbox = document.getElementById("lightbox");
-  if (!lightbox) {
-    console.error("Lightbox element not found");
-    return;
-  }
-  lightbox.style.display = "flex";
+  document.getElementById("lightbox").style.display = "flex";
   showLightboxImage();
 };
 
 window.closeLightbox = function () {
-  const lightbox = document.getElementById("lightbox");
-  if (lightbox) {
-    lightbox.style.display = "none";
-  }
+  document.getElementById("lightbox").style.display = "none";
 };
 
 // ==============================
-// Init + swipe + keyboard support
+// Init
 // ==============================
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("Gallery navigation script loaded");
 
-  // Randomize images in every category
+  // Randomize all categories
   Object.keys(galleryData).forEach(category => {
     shuffleArray(galleryData[category]);
   });
 
-  debugElements();
-
-  // Close lightbox when clicking outside image
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightboxImage");
 
+  // Click outside to close
   if (lightbox) {
     lightbox.onclick = function (e) {
       if (e.target === this) closeLightbox();
     };
   }
 
-  // Prevent clicking the image from closing the lightbox
   if (lightboxImg) {
-    lightboxImg.addEventListener("click", (e) => e.stopPropagation());
-  }
+    lightboxImg.addEventListener("click", e => e.stopPropagation());
 
-  // ---- Swipe support (mobile) ----
-  let startX = 0;
-  let startY = 0;
-  let isSwiping = false;
+    let startX = 0;
+    let startY = 0;
+    let isSwiping = false;
 
-  if (lightboxImg) {
-    // Stops browser from intercepting swipe as scroll on image
     lightboxImg.style.touchAction = "none";
 
-    lightboxImg.addEventListener(
-      "touchstart",
-      (e) => {
-        if (!e.touches || e.touches.length !== 1) return;
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-        isSwiping = true;
-      },
-      { passive: true }
-    );
+    lightboxImg.addEventListener("touchstart", (e) => {
+      if (!e.touches || e.touches.length !== 1) return;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      isSwiping = true;
+    }, { passive: true });
 
-    lightboxImg.addEventListener(
-      "touchend",
-      (e) => {
-        if (!isSwiping) return;
-        isSwiping = false;
+    lightboxImg.addEventListener("touchend", (e) => {
+      if (!isSwiping) return;
+      isSwiping = false;
 
-        const touch = e.changedTouches && e.changedTouches[0];
-        if (!touch) return;
+      const touch = e.changedTouches[0];
+      const dx = touch.clientX - startX;
+      const dy = touch.clientY - startY;
 
-        const endX = touch.clientX;
-        const endY = touch.clientY;
+      const minSwipeX = 40;
+      const minSwipeDown = 60;
+      const maxSwipeXForClose = 80;
 
-        const dx = endX - startX;
-        const dy = endY - startY;
+      // Swipe down to close
+      if (dy > minSwipeDown && Math.abs(dx) <= maxSwipeXForClose) {
+        closeLightbox();
+        return;
+      }
 
-        const minSwipeX = 40; // required horizontal movement
-        const maxSwipeY = 90; // ignore if too vertical
+      // Swipe left/right
+      if (Math.abs(dx) >= minSwipeX && Math.abs(dy) <= 90) {
+        if (dx < 0) nextImage();
+        else prevImage();
+      }
 
-        if (Math.abs(dx) >= minSwipeX && Math.abs(dy) <= maxSwipeY) {
-          if (dx < 0) nextImage(); // swipe left -> next
-          else prevImage(); // swipe right -> prev
-        }
-      },
-      { passive: true }
-    );
+    }, { passive: true });
   }
 
-  // ---- Keyboard support (desktop) ----
+  // Keyboard support
   document.addEventListener("keydown", (e) => {
-    const lb = document.getElementById("lightbox");
-    const isOpen = lb && lb.style.display === "flex";
+    const isOpen = lightbox && lightbox.style.display === "flex";
     if (!isOpen) return;
 
     if (e.key === "ArrowRight") nextImage();
     if (e.key === "ArrowLeft") prevImage();
     if (e.key === "Escape") closeLightbox();
   });
+
 });
