@@ -69,7 +69,7 @@ const galleryData = {
     "baked-goods/gallery-pictures/cakes/image_054.jpg",
     "baked-goods/gallery-pictures/cakes/image_055.jpg",
     "baked-goods/gallery-pictures/cakes/image_056.jpg",
-    
+    "baked-goods/gallery-pictures/cakes/image_057.jpg",
     
   ],
 
