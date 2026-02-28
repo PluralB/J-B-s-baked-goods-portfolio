@@ -151,6 +151,17 @@ function prevImage() {
   showLightboxImage();
 }
 
+
+// ==============================
+// Randomize / Shuffle function
+// ==============================
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]; // swap
+  }
+}
+
 // ==============================
 // Views: Categories -> Items
 // ==============================
@@ -286,6 +297,12 @@ window.closeLightbox = function () {
 // ==============================
 document.addEventListener("DOMContentLoaded", function () {
   console.log("Gallery navigation script loaded");
+
+  // Randomize images in every category
+  Object.keys(galleryData).forEach(category => {
+    shuffleArray(galleryData[category]);
+  });
+
   debugElements();
 
   // Close lightbox when clicking outside image
