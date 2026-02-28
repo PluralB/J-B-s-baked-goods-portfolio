@@ -1,4 +1,8 @@
-// 1. All image data in one place
+// ==============================
+// Gallery + Lightbox + Swipe Nav
+// ==============================
+
+// 1) All image data in one place
 const galleryData = {
   breads: [
     "baked-goods/gallery-pictures/breads/image_001.jpg",
@@ -69,8 +73,7 @@ const galleryData = {
     "baked-goods/gallery-pictures/cakes/image_054.jpg",
     "baked-goods/gallery-pictures/cakes/image_055.jpg",
     "baked-goods/gallery-pictures/cakes/image_056.jpg",
-    "baked-goods/gallery-pictures/cakes/image_057.jpg",
-    
+    "baked-goods/gallery-pictures/cakes/image_057.jpg"
   ],
 
   cookies: [
@@ -105,62 +108,89 @@ const galleryData = {
   ]
 };
 
-// 2. Debug function
+// 2) Basic debug helper (optional)
 function debugElements() {
-  console.log('=== DEBUGGING GALLERY ===');
-  console.log('categoriesView exists:', !!document.getElementById('categoriesView'));
-  console.log('categoryGalleryView exists:', !!document.getElementById('categoryGalleryView'));
-  console.log('categoryGalleryGrid exists:', !!document.getElementById('categoryGalleryGrid'));
-  console.log('Gallery data loaded:', Object.keys(galleryData));
+  console.log("=== DEBUGGING GALLERY ===");
+  console.log("categoriesView exists:", !!document.getElementById("categoriesView"));
+  console.log("categoryGalleryView exists:", !!document.getElementById("categoryGalleryView"));
+  console.log("categoryGalleryGrid exists:", !!document.getElementById("categoryGalleryGrid"));
+  console.log("lightbox exists:", !!document.getElementById("lightbox"));
+  console.log("lightboxImage exists:", !!document.getElementById("lightboxImage"));
+  console.log("Gallery data loaded:", Object.keys(galleryData));
 }
 
-// 3. FIXED showCategory function
-window.showCategory = function(category) {
-  console.log('=== SHOW CATEGORY CALLED ===');
-  console.log('Category:', category);
-  
+// ==============================
+// Lightbox navigation state
+// ==============================
+let currentCategory = null;
+let currentIndex = 0;
+
+function showLightboxImage() {
+  const img = document.getElementById("lightboxImage");
+  if (!img || !currentCategory) return;
+
+  const list = galleryData[currentCategory];
+  if (!list || list.length === 0) return;
+
+  // Wrap-around
+  if (currentIndex < 0) currentIndex = list.length - 1;
+  if (currentIndex >= list.length) currentIndex = 0;
+
+  img.src = list[currentIndex];
+}
+
+function nextImage() {
+  if (!currentCategory) return;
+  currentIndex++;
+  showLightboxImage();
+}
+
+function prevImage() {
+  if (!currentCategory) return;
+  currentIndex--;
+  showLightboxImage();
+}
+
+// ==============================
+// Views: Categories -> Items
+// ==============================
+window.showCategory = function (category) {
+  console.log("=== SHOW CATEGORY CALLED ===");
+  console.log("Category:", category);
+
   try {
-    // Check if we have data
     if (!galleryData[category]) {
-      console.error('No data for category:', category);
-      alert('No images found for this category!');
+      console.error("No data for category:", category);
+      alert("No images found for this category!");
       return;
     }
-    
-    console.log('Images for', category, ':', galleryData[category].length);
-    
-    // Get elements
-    const categoriesView = document.getElementById('categoriesView');
-    const galleryView = document.getElementById('categoryGalleryView');
-    const grid = document.getElementById('categoryGalleryGrid');
-    const title = document.getElementById('currentCategoryTitle');
-    
+
+    const categoriesView = document.getElementById("categoriesView");
+    const galleryView = document.getElementById("categoryGalleryView");
+    const grid = document.getElementById("categoryGalleryGrid");
+    const title = document.getElementById("currentCategoryTitle");
+
     if (!categoriesView || !galleryView || !grid) {
-      console.error('Missing DOM elements!');
+      console.error("Missing DOM elements!");
       debugElements();
       return;
     }
-    
-    // Hide categories, show gallery
-    console.log('Switching views...');
-    categoriesView.style.display = 'none';
-    galleryView.style.display = 'block';
-    
-    // Set title
+
+    // Switch views
+    categoriesView.style.display = "none";
+    galleryView.style.display = "block";
+
+    // Title
     if (title) {
       title.textContent = category.charAt(0).toUpperCase() + category.slice(1);
     }
-    
-    // Clear and populate grid
-    grid.innerHTML = '';
-    console.log('Grid cleared, adding images...');
-    
+
+    // Populate grid
+    grid.innerHTML = "";
+
     galleryData[category].forEach((imgSrc, index) => {
-      console.log(`Adding image ${index + 1}:`, imgSrc);
-      
-      // Create container
-      const itemDiv = document.createElement('div');
-      itemDiv.className = 'gallery-item';
+      const itemDiv = document.createElement("div");
+      itemDiv.className = "gallery-item";
       itemDiv.style.cssText = `
         position: relative;
         overflow: hidden;
@@ -168,9 +198,8 @@ window.showCategory = function(category) {
         background: #f0f0f0;
         min-height: 250px;
       `;
-      
-      // Create image
-      const img = document.createElement('img');
+
+      const img = document.createElement("img");
       img.src = imgSrc;
       img.alt = `${category} image ${index + 1}`;
       img.style.cssText = `
@@ -180,15 +209,14 @@ window.showCategory = function(category) {
         cursor: pointer;
         transition: transform 0.3s ease;
       `;
-      
-      // Add error handling
-      img.onerror = function() {
-        console.error('FAILED to load:', imgSrc);
-        this.style.background = '#ffebee';
-        this.alt = 'Failed to load image';
-        // Create error text
-        const errorText = document.createElement('div');
-        errorText.textContent = 'Image not found';
+
+      img.onerror = function () {
+        console.error("FAILED to load:", imgSrc);
+        this.style.background = "#ffebee";
+        this.alt = "Failed to load image";
+
+        const errorText = document.createElement("div");
+        errorText.textContent = "Image not found";
         errorText.style.cssText = `
           position: absolute;
           top: 50%;
@@ -199,78 +227,137 @@ window.showCategory = function(category) {
         `;
         itemDiv.appendChild(errorText);
       };
-      
-      img.onload = function() {
-        console.log('SUCCESS loaded:', imgSrc);
+
+      img.onload = function () {
+        console.log("SUCCESS loaded:", imgSrc);
       };
-      
-      // Add click handler for lightbox
+
+      // Open lightbox with swipe-enabled navigation state
       img.onclick = () => {
-        console.log('Opening lightbox for:', imgSrc);
-        openLightbox(imgSrc);
+        currentCategory = category;
+        currentIndex = index;
+        openLightbox();
       };
-      
-      // Add hover effect
-      img.onmouseover = () => img.style.transform = 'scale(1.05)';
-      img.onmouseout = () => img.style.transform = 'scale(1)';
-      
+
+      img.onmouseover = () => (img.style.transform = "scale(1.05)");
+      img.onmouseout = () => (img.style.transform = "scale(1)");
+
       itemDiv.appendChild(img);
       grid.appendChild(itemDiv);
     });
-    
-    console.log('Gallery populated with', galleryData[category].length, 'images');
-    
+
+    console.log("Gallery populated:", galleryData[category].length, "images");
   } catch (error) {
-    console.error('Error in showCategory:', error);
-    alert('Error loading gallery: ' + error.message);
+    console.error("Error in showCategory:", error);
+    alert("Error loading gallery: " + error.message);
   }
 };
 
-// 4. Back to categories
-window.showCategories = function() {
-  console.log('Returning to categories');
-  document.getElementById('categoriesView').style.display = 'block';
-  document.getElementById('categoryGalleryView').style.display = 'none';
+window.showCategories = function () {
+  console.log("Returning to categories");
+  const categoriesView = document.getElementById("categoriesView");
+  const galleryView = document.getElementById("categoryGalleryView");
+  if (categoriesView) categoriesView.style.display = "block";
+  if (galleryView) galleryView.style.display = "none";
 };
 
-// 5. Lightbox functions
-window.openLightbox = function(src) {
-  console.log('Opening lightbox:', src);
-  const lightbox = document.getElementById('lightbox');
-  const img = document.getElementById('lightboxImage');
-  
-  if (lightbox && img) {
-    img.src = src;
-    lightbox.style.display = 'flex';
-  } else {
-    console.error('Lightbox elements not found');
+// ==============================
+// Lightbox open/close
+// ==============================
+window.openLightbox = function () {
+  const lightbox = document.getElementById("lightbox");
+  if (!lightbox) {
+    console.error("Lightbox element not found");
+    return;
   }
+  lightbox.style.display = "flex";
+  showLightboxImage();
 };
 
-window.closeLightbox = function() {
-  const lightbox = document.getElementById('lightbox');
+window.closeLightbox = function () {
+  const lightbox = document.getElementById("lightbox");
   if (lightbox) {
-    lightbox.style.display = 'none';
+    lightbox.style.display = "none";
   }
 };
 
-// 6. Initialize on DOM load
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('Gallery navigation script loaded');
+// ==============================
+// Init + swipe + keyboard support
+// ==============================
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("Gallery navigation script loaded");
   debugElements();
-  
-  // Test category data
-  Object.keys(galleryData).forEach(category => {
-    console.log(`${category}: ${galleryData[category].length} images`);
-  });
-  
-  // Set up lightbox click-outside-to-close
-  const lightbox = document.getElementById('lightbox');
+
+  // Close lightbox when clicking outside image
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightboxImage");
+
   if (lightbox) {
-    lightbox.onclick = function(e) {
-      if (e.target === this) {
-        closeLightbox();
-      }
+    lightbox.onclick = function (e) {
+      if (e.target === this) closeLightbox();
     };
   }
+
+  // Prevent clicking the image from closing the lightbox
+  if (lightboxImg) {
+    lightboxImg.addEventListener("click", (e) => e.stopPropagation());
+  }
+
+  // ---- Swipe support (mobile) ----
+  let startX = 0;
+  let startY = 0;
+  let isSwiping = false;
+
+  if (lightboxImg) {
+    // Stops browser from intercepting swipe as scroll on image
+    lightboxImg.style.touchAction = "none";
+
+    lightboxImg.addEventListener(
+      "touchstart",
+      (e) => {
+        if (!e.touches || e.touches.length !== 1) return;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        isSwiping = true;
+      },
+      { passive: true }
+    );
+
+    lightboxImg.addEventListener(
+      "touchend",
+      (e) => {
+        if (!isSwiping) return;
+        isSwiping = false;
+
+        const touch = e.changedTouches && e.changedTouches[0];
+        if (!touch) return;
+
+        const endX = touch.clientX;
+        const endY = touch.clientY;
+
+        const dx = endX - startX;
+        const dy = endY - startY;
+
+        const minSwipeX = 40; // required horizontal movement
+        const maxSwipeY = 90; // ignore if too vertical
+
+        if (Math.abs(dx) >= minSwipeX && Math.abs(dy) <= maxSwipeY) {
+          if (dx < 0) nextImage(); // swipe left -> next
+          else prevImage(); // swipe right -> prev
+        }
+      },
+      { passive: true }
+    );
+  }
+
+  // ---- Keyboard support (desktop) ----
+  document.addEventListener("keydown", (e) => {
+    const lb = document.getElementById("lightbox");
+    const isOpen = lb && lb.style.display === "flex";
+    if (!isOpen) return;
+
+    if (e.key === "ArrowRight") nextImage();
+    if (e.key === "ArrowLeft") prevImage();
+    if (e.key === "Escape") closeLightbox();
+  });
 });
