@@ -97,6 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
     'baked-goods/showdown/Image_093.jpg',
     'baked-goods/showdown/Image_094.jpg',
     'baked-goods/showdown/Image_095.jpg',
+    'baked-goods/showdown/Image_096.jpg',
   ];
 
   // Create image elements for each image in the array
