@@ -603,3 +603,47 @@ header nav a:hover {
   }
 }
 
+/* =========================
+   Instagram Section
+========================= */
+
+.instagram-section {
+  background: #fff8f4; /* same soft tone as site */
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.instagram-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.instagram-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  color: #c96a2b; /* your orange tone */
+  margin-bottom: 10px;
+}
+
+.instagram-text {
+  font-family: 'Open Sans', sans-serif;
+  color: #444;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.instagram-link {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  color: #c96a2b;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.2s ease;
+}
+
+.instagram-link:hover {
+  opacity: 0.7;
+}
